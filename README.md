@@ -8,7 +8,7 @@ main部分设置的指令将影响其他所有设置；server部分的指令主�
 # 每个指令必须以分号结束
 
 #配置用户或者组，默认为nobody nobody；windows下不指定
-#user  nobody;
+#user nobody nobody;
 
 #开启的线程数，一般跟逻辑CPU核数一致，默认为1
 worker_processes  1;
