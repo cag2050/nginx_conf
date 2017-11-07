@@ -5,7 +5,7 @@
 #配置用户或者组，默认为nobody nobody
 #user  nobody;
 
-#允许生成的进程数，默认为1
+#启动进程,通常设置成和cpu的数量相等，默认为1
 worker_processes  1;
 
 #制定日志路径，级别。这个设置可以放入全局块，http块，server块，级别依次为：debug|info|notice|warn|error|crit|alert|emerg
@@ -37,13 +37,16 @@ http {
     
     #允许sendfile方式传输文件，默认为off，可以在http块，server块，location块。
     sendfile        on;
+    
     #tcp_nopush     on;
     
     #连接超时时间，默认为75s，可以在http，server，location块。
     #keepalive_timeout  0;
     keepalive_timeout  65;
 
+    #开启gzip压缩
     #gzip  on;
+    #gzip_disable "MSIE [1-6]\.(?!.*SV1)";
 
     server {
         #监听端口
@@ -54,7 +57,8 @@ http {
 
         #charset koi8-r;
 
-        #access_log  logs/host.access.log  main;
+        #设定本虚拟主机的访问日志
+        #access_log  logs/host.access.log;
 
         location / {
             #根目录
@@ -64,7 +68,7 @@ http {
             #index  index.html index.htm;
             
             #使用vue-router时，配置此项。详见：https://router.vuejs.org/zh-cn/essentials/history-mode.html
-	        try_files $uri $uri/ /index.html;
+            try_files $uri $uri/ /index.html;
         }
 
         #error_page  404              /404.html;
