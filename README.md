@@ -1,8 +1,14 @@
 ### nginx 配置文件，参数说明
 ```
+# 每个指令必须以分号结束
+
+#配置用户或者组，默认为nobody nobody
 #user  nobody;
+
+#允许生成的进程数，默认为1
 worker_processes  1;
 
+#制定日志路径，级别。这个设置可以放入全局块，http块，server块，级别依次为：debug|info|notice|warn|error|crit|alert|emerg
 #error_log  logs/error.log;
 #error_log  logs/error.log  notice;
 #error_log  logs/error.log  info;
@@ -10,29 +16,40 @@ worker_processes  1;
 #pid        logs/nginx.pid;
 
 events {
+    #最大连接数，默认为512
     worker_connections  1024;
 }
 
 http {
+    #文件扩展名与文件类型映射表
     include       mime.types;
+    
+    #默认文件类型，默认为text/plain
     default_type  application/octet-stream;
-
+    
+    #自定义日志格式
     #log_format  main  '$remote_addr - $remote_user [$time_local] "$request" '
     #                  '$status $body_bytes_sent "$http_referer" '
     #                  '"$http_user_agent" "$http_x_forwarded_for"';
-
+    
+    #combined为日志格式的默认值
     #access_log  logs/access.log  main;
-
+    
+    #允许sendfile方式传输文件，默认为off，可以在http块，server块，location块。
     sendfile        on;
     #tcp_nopush     on;
-
+    
+    #连接超时时间，默认为75s，可以在http，server，location块。
     #keepalive_timeout  0;
     keepalive_timeout  65;
 
     #gzip  on;
 
     server {
+        #监听端口
         listen       8080;
+        
+        #监听地址
         server_name  localhost;
 
         #charset koi8-r;
@@ -40,9 +57,14 @@ http {
         #access_log  logs/host.access.log  main;
 
         location / {
+            #根目录
             root   /Users/cag/Documents/mp_query/dist;
+            
+            #默认页
             #index  index.html index.htm;
-	    try_files $uri $uri/ /index.html;
+            
+            #使用vue-router时，配置此项。详见：https://router.vuejs.org/zh-cn/essentials/history-mode.html
+	        try_files $uri $uri/ /index.html;
         }
 
         #error_page  404              /404.html;
