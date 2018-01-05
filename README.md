@@ -8,6 +8,7 @@ main部分设置的指令将影响其他所有设置；server部分的指令主�
 # 每个指令必须以分号结束
 
 #配置用户或者组，默认为nobody nobody；windows下不指定
+# 有时候会报错误：open() "/data/www/1.txt" failed (13: Permission denied)，一种简单解决办法是配置：user root;
 #user nobody nobody;
 
 #开启的线程数，一般跟逻辑CPU核数一致，默认为1
